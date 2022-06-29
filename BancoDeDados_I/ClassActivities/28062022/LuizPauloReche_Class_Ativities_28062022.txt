@@ -1,0 +1,31 @@
+1)
+	create database locadora;
+	
+	*Rodar BDICinema.sql*
+
+2)
+A)
+insert into filme(codf,titulo,anol,dur,codd) values (70,'it',1990,192,102);
+
+B)
+insert into pessoa (codp,nome,dtnasc,paisn) values (155,'Wagner Moura','1940-06-24','Brasil'),
+								   (160,'Andre Ramires','1945-05-14','Brasil');
+
+insert into filme(codf,titulo,anol,dur,codd) values (71,'Tropa de Elite',2007,215,102);
+
+insert into elenco(codf,codp,codpapel,oscar) values (71,155,1,'Y'),
+								    (71,160,2,'N'),
+								    (71,109,10,'N');
+
+c)
+select titulo,anol from filme where anol > 1970;
+
+d)
+select * from pessoa where paisn='França';
+
+e)
+select * from avaliacao where email like '%@gmail.com%';
+
+f)
+select nome from pessoa where dtnasc between '1930-01-01' and '1939-12-31';
+
