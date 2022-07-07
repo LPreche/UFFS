@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula de eventos 04/07</title>
+</head>
+<body>
+    <h1>   Aprendendo eventos </h1>
+    <p>    Texto   texto       </p>
+    <button id="btn" onmouseover="passouOmouse(event)">Mostrar evento</button>
+
+    <script>
+
+            function passouOmouse(event){
+                var botao = document.getElementById('btn')
+                botao.innerText="alguma coisa"
+                console.log("passando o mouse no botão",event)
+            }
+
+             
+    </script>
+    $('#btn').datetimepicker() {
+        language: 'pt-br', 
+        
+    };
+
+</body>
+</html>
