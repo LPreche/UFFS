@@ -1,0 +1,57 @@
+﻿Atividades:
+1. Listar todas as cidades cadastradas: sigla e nome
+
+2. Listar todas as cidades (todos os atributos) do estado de Santa Catarina (SC)
+
+3. Listar todos os eventos cadastrados: apenas a descrição
+
+4. Listar todas as cidades com seus bairros cadastradas
+
+5. Listar todos os nomes de bairros das cidades de Itajaí e Chapecó.
+
+6. Listar todos os eventos do tipo Teatro que ocorreram a partir de Julho/2013: nome da cidade, bairro, no do local e nome do evento
+
+7. Listar todos os eventos que ocorreram/ocorrerão em Joinville.
+
+8. Vai ocorrer a 4a. Feiras de Noivos e Noivas no Centro de Eventos de Caibi (localizado no centro da cidade). O evento ocorrerá no dia 10/10/2018 iniciando às 08:00h
+*/
+
+
+
+
+
+1)select sigc as sigla,nomec as nome from cidade;
+
+
+
+2)select * from cidade where uf='SC';
+
+
+
+3)select tipoev.descr as Descricao_Evento from tipoev left join evento on tipoev.code = evento.code;
+
+
+
+4)select cidade.nomec as cidade,bairro.nomeb as bairo from cidade join bairro on cidade.sigc = bairro.sigc order by cidade.nomec,bairro.nomeb;
+
+
+
+5)select bairro.nomeb as nome_bairro from bairro join cidade on cidade.sigc = bairro.sigc where cidade.nomec = 'Itajaí' or cidade.nomec = 'Chapecó' order by cidade.nomec,bairro.nomeb;
+
+
+
+6)select cidade.nomec,bairro.nomeb,local.nomel,evento.nomee from evento
+inner join cidade on evento.sigc = cidade.sigc
+inner join bairro on evento.sigb = bairro.sigb and evento.sigc = bairro.sigc
+inner join local on evento.sigc = local.sigc and evento.sigb = local.sigb and evento.sigc = local.sigc
+inner join tipoev on evento.code = tipoev.code
+where evento.dthora > '2013-07-31 23:59:59' and tipoev.descr = 'Teatro';
+
+
+
+7)select * from evento inner join cidade on evento.sigc = cidade.sigc where cidade.nomec = 'Joiville';
+
+
+
+8)insert into local(sigc,sigb,sigl,nomel,capac) values ('CAI','CEN','CEV','Centro eventos',200);
+  insert into evento(sigc,sigb,sigl,code,dthora,nomee) values('CAI','CEN','CEV',4,'2018-10-10 08:00:00','Feira noivos/noivas');
