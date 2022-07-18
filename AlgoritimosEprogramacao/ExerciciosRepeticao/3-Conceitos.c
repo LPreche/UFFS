@@ -5,20 +5,19 @@
 
 int main(int argc, char *argv[]) {
 	char conc[75];
-	int i=0;
+	int i,i1;
 	double matric[75];
 	float med_final[75];
-		for(i=0;i<75;i++){
+		for(i=1;i<=75;i++){
 			printf("\nDigite a matricula\n");
 			scanf("%lf",&matric[i]);
 			printf("\nDigite sua nota final\n");
 			scanf("%f",&med_final[i]);
 			
-			while((med_final[i] > 10.0)||(med_final[i] < 0.0)){
+			if((med_final[i] > 10.0)||(med_final[i] < 0.0)){
 				printf("\nNumero negativo ou maior que 10,0\n Digite novamente:\n");
 				scanf("%f",&med_final[i]);
 			}
-			
 			
 			if((med_final[i] >= 0.0)&&(med_final[i] < 5.0)){
 				conc[i]='D';
@@ -32,9 +31,8 @@ int main(int argc, char *argv[]) {
 			
 		}
 		printf("Matricula\t\tConceito\n");
-
-		for(i=0;i<75;i++){
-			printf("%0.0lf\t\t\t%c\n",matric[i],conc[i]);
+		for(i1=1;i1<=75;i1++){
+			printf("%0.0lf\t\t\t%c\n",matric[i1],conc[i1]);
 		}
 		return 0;
 	}

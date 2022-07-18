@@ -9,16 +9,17 @@ int main(int argc, char *argv[]) {
 	chico=1.50;
 	ze=1.10;
 	
-	while(ze <= chico){
+	for(i=0;i <= 75;i++){
 		chico +=0.02;
 		ze +=0.03;
 		anos++;
-		printf("%d Ano(s)\taltura Chico %0.2f\taltura ze %0.2f\n",anos,chico,ze);
-	}	
+		printf("Ano %d\tChico %0.2f\tze %0.2f\n",anos,chico,ze);
+		if(ze > chico){
+			break;
+		}
 			
+	}
 	
 	printf("para que ze seja maior que chico, ele levara %d anos\n",anos);	
-
-	return 0;
-
-}
+		return 0;
+	}

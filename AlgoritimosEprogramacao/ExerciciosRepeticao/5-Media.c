@@ -8,14 +8,16 @@ int main(int argc, char *argv[]) {
 	int i;
 	float media=0,soma=0,num;
 	
-	do{
+	for(i=0;;i++){
 		scanf("%f",&num);
-		soma +=num;
-		i++;
-	}while(num>=0);
-	
+		if(num < 0){
+			break;
+		}else{
+			soma +=num;
+		}
+	}
 	
 	media= soma / i;
-	printf("MÃ©dia dos valores Ã©: %0.2f",media);	
+	printf("Média dos valores é: %0.2f",media);	
 		return 0;
 }
