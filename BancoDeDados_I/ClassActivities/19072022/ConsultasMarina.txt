@@ -1,0 +1,50 @@
+Q1: Encontre os velejadores que ja reservaram o barco numero 103:
+
+select sailor.sname from sailor inner join reserve on sailor.sid = reserve.sid where reserve.bid = 103
+
+Q1a: e quem nunca reservou o barco 103:
+
+select distinct sailor.sname from sailor inner join reserve on sailor.sid = reserve.sid where not exists(select sid from reserve where bid = 103 and sailor.sid=sid);
+
+Q2: Encontre os nomes dos velejadores que reservaram um barco vermelho
+
+select sailor.sname from sailor inner join reserve on reserve.sid = sailor.sid where exists(select * from reserve inner join boat on boat.bid = reserve.bid where boat.color='red');
+
+Q3: encontre as cores dos barcos reservados pelo lubber:
+
+select distinct boat.color from boat inner join reserve on boat.bid = reserve.bid where exists(select boat.bid from reserve inner join sailor on sailor.sid = reserve.sid where sailor.sname = 'Lubber');
+
+
+Q4: encontre os nomes dos velejadores que reservaram pelo menos um barco
+
+select sailor.sname from sailor where exists(select * from reserve where sailor.sid = reserve.sid);
+
+
+Q5: encontre os nomes dos velejadores que reservaram um barco vermelho ou um barco verde
+
+select sailor.sname from sailor where exists(select * from reserve inner join boat on boat.bid = reserve.bid and sailor.sid = reserve.sid where boat.color in('red','green'));
+
+Q6: encontre os nomes dos velejadores que tenham reservados barcos vermelhos e barcos verdes
+
+select sailor.sid,sailor.sname from sailor natural join reserve
+natural join boat
+where boat.color='red'
+intersect
+select sailor.sid,sailor.sname from sailor natural join reserve
+natural join boat
+where boat.color='green';
+
+Q6a: encontre o nome dos velejadores que reservaram um barco vermelho mas nao um barco verde
+
+
+**retornar o velejador mais velho cadastrado
+select sname from sailor where age = (select max(age) from sailor);
+
+
+**retornar o velejador que fez mais reservas
+
+select sid,sname from sailor natural join reserve
+group by sid,sname
+having count(sid) = (select max(c) as mx from(select count(sid) as c from reserve group by sid)t);
+
+
