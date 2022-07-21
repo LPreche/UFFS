@@ -2,6 +2,7 @@
 
 campo:		.space	576
 tamanho:	.word	0
+enderecoRA:	.word	0
 
 msg:		.asciz  "  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Opção: "
 espaco:		.asciz	" "
@@ -23,11 +24,14 @@ main:
 	
 	#Inicia Campo
 	la	a0,campo
-	li	t1,0#Inicia linha
-	li	t2,0#Inicia coluna		
+	li	t1,0		#Inicia linha
+	li	t2,0		#Inicia coluna		
 	jal	inicia_campo
 	
 	#mostrar campo inicial
+	la	a2,campo	#passa endereço do campo em a2 pois na função há chamadas de sistema, os quais utilizam a0 como argumento de função
+	li	t1,0		#Inicia linha
+	li	t2,0		#Inicia coluna
 	jal	mostra_campo
 	
 	#Fim do programa
@@ -71,7 +75,34 @@ inicia_campo:
 	ret
 
 mostra_campo:
+	la	t3,enderecoRA
+	sw	ra,(t3)
+	li	t3,0
+	jal	mostra_indices_linha
+	lw	s0,(a2)
+	beq	s0,zero,mostra_traco
+	mv	a0,s0
 	ret
+	
+mostra_indices_linha:
+
+	mv	a0,t3
+	li	a7,1
+	ecall
+	
+	la	a0,espaco
+	li	a7,4
+	ecall
+	
+	addi	t3,t3,1
+	bne	t3,a1,mostra_indices_linha
+	
+	la	a0,quebra
+	li	a7,4
+	ecall
+	
+	ret
+	
 	
 	
 	
