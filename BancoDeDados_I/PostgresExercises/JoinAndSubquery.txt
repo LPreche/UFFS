@@ -1,0 +1,11 @@
+1- select b.starttime from cd.bookings b inner join cd.members m on b.memid=m.memid where m.surname='Farrell' and m.firstname='David'
+
+
+2- select b.starttime as start, f.name as name from cd.bookings b
+inner join cd.facilities f on f.facid = b.facid where f.name like '%Tennis Court%' and b.starttime between '2012-09-21 00:00:00' and '2012-09-21 23:59:59'
+
+
+3- select firstname,surname from cd.members where memid in(select recommendedby from cd.members where recommendedby <> 0) order by surname,firstname
+
+
+4- 
