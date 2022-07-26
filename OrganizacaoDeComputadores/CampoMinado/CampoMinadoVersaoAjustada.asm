@@ -2,11 +2,12 @@
 
 campo:		.space	576
 tamanho:	.word	0
+enderecoRA:	.word	0
 
-msg:		.asciz  "  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Opção: "
+msg:		.asciz  "  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Opï¿½ï¿½o: "
 espaco:		.asciz	" "
 quebra:		.asciz	"\n"
-op_invalida:	.asciz	"Opção invalida, Digite Novamente:	"
+op_invalida:	.asciz	"Opï¿½ï¿½o invalida, Digite Novamente:	"
 traco:		.asciz	"-"
 
 		.text
@@ -27,7 +28,11 @@ main:
 	li	t2,0#Inicia coluna		
 	jal	inicia_campo
 	
-	#mostrar campo inicial
+	#mostrar campo
+	la	a1,campo
+	lw	a2,tamanho
+	li	t1,0
+	addi	t2,a2,1
 	jal	mostra_campo
 	
 	#Fim do programa
@@ -69,10 +74,72 @@ inicia_campo:
 	bne	t2,a1,inicia_campo
 	
 	ret
-
-mostra_campo:
-	ret
 	
+mostra_campo:
+	mv	a0,t1
+	li	a7,1
+	ecall
+	
+	la	a0,espaco
+	li	a7,4
+	ecall
+	
+	addi	t1,t1,1
+	bne	t1,a2,mostra_campo
+	
+	la	a0,quebra
+	li	a7,4
+	ecall
+
+	li	t1,0
+	li	t2,0
+mostra_campo2:	
+	lw	a0,(a1)
+	beq	a0,zero,mostra_traco
+	li	a7,1
+	ecall
+	
+	la	a0,espaco
+	li	a7,4
+	ecall
+	addi	a1,a1,4
+	bne	t1,a2,mostra_campo2
+	
+	li	t1,0
+	addi	t2,t2,1
+	
+	la	a0,quebra
+	li	a7,4
+	ecall
+	
+	
+	bne	t2,a2,mostra_campo2
+	
+	ret
+
+mostra_traco:
+	la	a0,traco
+	li	a7,4
+	ecall
+	
+	la	a0,espaco
+	li	a7,4
+	ecall
+	addi	a1,a1,4
+	bne	t1,a2,mostra_campo2
+	
+	li	t1,0
+	addi	t2,t2,1
+	bne	t2,a2,mostra_campo2
+	
+	ret
+
+	
+
+	
+	
+	
+
 	
 	
 
