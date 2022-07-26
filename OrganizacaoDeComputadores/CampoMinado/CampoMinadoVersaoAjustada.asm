@@ -24,15 +24,22 @@ main:
 	
 	#Inicia Campo
 	la	a0,campo
-	li	t1,0#Inicia linha
-	li	t2,0#Inicia coluna		
+	li	t1,0		#Inicia linha
+	li	t2,0		#Inicia coluna		
 	jal	inicia_campo
 	
+<<<<<<< HEAD
 	#mostrar campo
 	la	a1,campo
 	lw	a2,tamanho
 	li	t1,0
 	addi	t2,a2,1
+=======
+	#mostrar campo inicial
+	la	a2,campo	#passa endereço do campo em a2 pois na função há chamadas de sistema, os quais utilizam a0 como argumento de função
+	li	t1,0		#Inicia linha
+	li	t2,0		#Inicia coluna
+>>>>>>> b584f2ca95cfed6dffd1945056bcace489f311fc
 	jal	mostra_campo
 	
 	#Fim do programa
@@ -76,6 +83,7 @@ inicia_campo:
 	ret
 	
 mostra_campo:
+<<<<<<< HEAD
 	mv	a0,t1
 	li	a7,1
 	ecall
@@ -96,25 +104,48 @@ mostra_campo:
 mostra_campo2:	
 	lw	a0,(a1)
 	beq	a0,zero,mostra_traco
+=======
+	la	t3,enderecoRA
+	sw	ra,(t3)
+	li	t3,0
+	jal	mostra_indices_linha
+	lw	s0,(a2)
+	beq	s0,zero,mostra_traco
+	mv	a0,s0
+	ret
+	
+mostra_indices_linha:
+
+	mv	a0,t3
+>>>>>>> b584f2ca95cfed6dffd1945056bcace489f311fc
 	li	a7,1
 	ecall
 	
 	la	a0,espaco
 	li	a7,4
 	ecall
+<<<<<<< HEAD
 	addi	a1,a1,4
 	bne	t1,a2,mostra_campo2
 	
 	li	t1,0
 	addi	t2,t2,1
+=======
+	
+	addi	t3,t3,1
+	bne	t3,a1,mostra_indices_linha
+>>>>>>> b584f2ca95cfed6dffd1945056bcace489f311fc
 	
 	la	a0,quebra
 	li	a7,4
 	ecall
 	
+<<<<<<< HEAD
 	
 	bne	t2,a2,mostra_campo2
 	
+=======
+>>>>>>> b584f2ca95cfed6dffd1945056bcace489f311fc
 	ret
 
 mostra_traco:
@@ -140,6 +171,7 @@ mostra_traco:
 	
 	
 
+	
 	
 	
 
