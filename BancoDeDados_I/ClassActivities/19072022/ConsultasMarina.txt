@@ -43,8 +43,16 @@ select sname from sailor where age = (select max(age) from sailor);
 
 **retornar o velejador que fez mais reservas
 
-select sid,sname from sailor natural join reserve
-group by sid,sname
-having count(sid) = (select max(c) as mx from(select count(sid) as c from reserve group by sid)t);
+select s.sname from sailor s natural join reserve r group by s.sid
+having count(s.sid)=(select max(c) from (select count(*) as c from reserve group by sid)t);
 
 
+select s.sid,s.sname from sailor s natural left join reserve r group by s.sid 
+having count(s.sid)=(select min(c) from (select count(*) as c from sailor s natural left join reserve r group by sid)t);
+
+
+
+querys marina II 
+
+
+select s.sid,s.sname from sailor s where not exists (select * from boat b where not exists (select * from reserve r where r.sid=s.sid and r.bid=b.bid));
