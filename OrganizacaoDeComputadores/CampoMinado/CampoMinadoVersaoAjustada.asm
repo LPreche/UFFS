@@ -29,7 +29,7 @@ main:
 	jal	inicia_campo
 	
 	#mostrar campo
-	la	a1,campo	#passa endereço do campo em a1 pois a0 será utilizado posteriormente como argumento da chamada de função
+	la	a1,campo	#passa endereï¿½o do campo em a1 pois a0 serï¿½ utilizado posteriormente como argumento da chamada de funï¿½ï¿½o
 	lw	a2,tamanho
 	li	t1,0
 	addi	t2,a2,1
@@ -75,29 +75,29 @@ inicia_campo:
 	ret
 	
 mostra_campo:
-	mv	a0,t1
-	li	a7,1
-	ecall
 	
 	la	a0,espaco
 	li	a7,4
 	ecall
+	mv	a0,t1
+	li	a7,1
+	ecall
 	
 	addi	t1,t1,1
-	bne	t1,t2,mostra_campo
+	bne	t1,a2,mostra_campo
 	
 	la	a0,quebra
 	li	a7,4
 	ecall 
 	
-	li	a0,1
+	li	a0,0
 	li	a7,1
 	ecall
 	
 	la	a0,espaco
 	li	a7,4
-	
 	ecall
+	
 	li	t1,0
 	li	t2,0
 	
@@ -118,7 +118,8 @@ mostra_campo2:
 	
 	
 	li	t1,0
-	addi	a0,t2,1
+	addi	t2,t2,1
+	mv	a0,t2
 	li	a7,1
 	ecall
 	la	a0,quebra
@@ -131,7 +132,7 @@ mostra_campo2:
 	la	a0,espaco
 	li	a7,4
 	ecall
-	addi	t2,t2,1
+	
 	bne	t2,a2,mostra_campo2
 
 	ret
@@ -155,7 +156,7 @@ mostra_traco:
 	li	a7,4
 	ecall
 	
-	addi	a0,t2,1
+	mv	a0,t2
 	li	a7,1
 	ecall
 	la	a0,espaco
