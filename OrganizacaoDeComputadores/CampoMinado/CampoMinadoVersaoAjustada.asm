@@ -4,10 +4,10 @@ campo:		.space	576
 tamanho:	.word	0
 enderecoRA:	.word	0
 
-msg:		.asciz  "  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Op��o: "
+msg:		.asciz  "  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Opção: "
 espaco:		.asciz	" "
 quebra:		.asciz	"\n"
-op_invalida:	.asciz	"Op��o invalida, Digite Novamente:	"
+op_invalida:	.asciz	"Opcão invalida, Digite Novamente:	"
 traco:		.asciz	"-"
 
 		.text
@@ -65,7 +65,7 @@ retorna_tamanho:
 	ret #retornando tamanho em a1
 	
 inicia_campo:
-	sw	t1,(a0)
+	sw	zero,(a0)
 	addi	a0,a0,4
 	addi	t1,t1,1	
 	bne	t1,a1,inicia_campo
@@ -75,22 +75,21 @@ inicia_campo:
 	ret
 	
 mostra_campo:
-	
-	la	a0,espaco
-	li	a7,4
-	ecall
 	mv	a0,t1
 	li	a7,1
 	ecall
+	la	a0,espaco
+	li	a7,4
+	ecall
 	
 	addi	t1,t1,1
-	bne	t1,a2,mostra_campo
+	bne	t1,t2,mostra_campo
 	
 	la	a0,quebra
 	li	a7,4
 	ecall 
 	
-	li	a0,0
+	li	a0,1
 	li	a7,1
 	ecall
 	
@@ -119,16 +118,15 @@ mostra_campo2:
 	
 	li	t1,0
 	addi	t2,t2,1
-	mv	a0,t2
-	li	a7,1
-	ecall
+	
+	beq	t2,a2,fim
 	la	a0,quebra
 	li	a7,4
 	ecall
-	
 	addi	a0,t2,1
 	li	a7,1
 	ecall
+		
 	la	a0,espaco
 	li	a7,4
 	ecall
@@ -155,8 +153,8 @@ mostra_traco:
 	la	a0,quebra
 	li	a7,4
 	ecall
-	
-	mv	a0,t2
+	beq	t2,a2,fim
+	addi	a0,t2,1
 	li	a7,1
 	ecall
 	la	a0,espaco
@@ -164,8 +162,6 @@ mostra_traco:
 	ecall
 	
 	bne	t2,a2,mostra_campo2
-	
-	j	fim
 
 fim:
 	ret
