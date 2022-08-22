@@ -1,7 +1,7 @@
 		.data
 
-campo:		.space	576
-interface:	.space	576
+campo:		.space	576 #aloca espaço para 12x12 posições. Campo 
+interface:	.space	576 #aloca espaço para 12x12 posições. Campo interface do jogador
 
 
 tamanho:	.word	0
@@ -32,40 +32,40 @@ main:
 	ecall
 	
 	#seleciona tamanho do campo
-	jal	seleciona_tamanho
+	jal	seleciona_tamanho#Retorna tamanho em a0
 	la	t1,tamanho
 	sw	a0,(t1)
 	
 	#Inicia Campo
-	la	a0,campo
+	la	a0,campo	#Passa endereço do campo em a0
+	li	t1,0		#Inicia linha
+	li	t2,0		#Inicia coluna		
+	jal	inicia_campo	
+	
+	#Inicia Campo inteface 
+	la	a0,interface	#Passa endereço do campo interface em a0
 	li	t1,0		#Inicia linha
 	li	t2,0		#Inicia coluna		
 	jal	inicia_campo
 	
-	#Inicia Campo inteface
-	la	a0,interface
-	li	t1,0		#Inicia linha
-	li	t2,0		#Inicia coluna		
-	jal	inicia_interface
-	
-	#mostrar interface
-	la	a1,interface	#passa endereï¿½o do campo em a1 pois a0 serï¿½ utilizado posteriormente como argumento da chamada de funï¿½ï¿½o
-	lw	a2,tamanho
-	li	t0,0
-	li	t1,0
-	addi	t2,a2,1
-	jal	mostra_interface
-
-	
-	#Chama FunÃ§Ã£o Insere bomba
+	#Chama Funcao Insere bomba
 	la	a0,campo
 	addi	a1,zero,12	
 	jal 	INSERE_BOMBA	
 	##########################
 	
+	#mostrar campo interface
+	la	a1,campo	#passa endereï¿½o do campo em a1 pois a0 sera utilizado posteriormente como argumento da chamada de função.
+	lw	a2,tamanho	#passa tamanho do campo em a2
+	li	t0,0		#inicia linha
+	li	t1,0		#inicia coluna
+	addi	t2,a2,1		
+	jal	mostra_campo
+
+	
+
 	li	t0,0
 	li	t1,0
-
 	##########################
 	#iniciando jogo
 	la	a0,campo
@@ -113,18 +113,6 @@ inicia_campo:
 	bne	t2,a1,inicia_campo
 	ret
 
-inicia_interface:
- 	lw	t0,traco
-	sb	t0,(a0)
-	addi	a0,a0,4
-	addi	t1,t1,1	
-
-	bne	t1,a1,inicia_interface
-	li	t1,0
-	addi	t2,t2,1
-	bne	t2,a1,inicia_interface
-	ret
-	
 mostra_campo:
 	li	t3,9
 	mv	a0,t0
@@ -155,7 +143,7 @@ mostra_campo:
 	ecall
 mostra_campo2:
 	lw	a0,(a1)
-	li	a7,4
+	li	a7,1
 	ecall
 	
 	la	a0,espaco
@@ -234,8 +222,8 @@ mostra_interface:
 	li	a7,4
 	ecall
 mostra_interface2:
-	mv	a0,a1
-	li	a7,4
+	lw	a0,(a1)
+	li	a7,1
 	ecall
 	
 	la	a0,espaco
@@ -452,7 +440,7 @@ abrir_posicao:
 	lw	t5,(t1)
 	sw	t5,(t2)
 	
-	la	a1,interface	#passa endereï¿½o do campo em a1 pois a0 serï¿½ utilizado posteriormente como argumento da chamada de funï¿½ï¿½o
+	la	a1,interface
 	lw	a2,tamanho
 	li	t0,0
 	li	t1,0
