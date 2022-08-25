@@ -1,6 +1,10 @@
+#Aluno: Luiz Paulo Reche      Matricula:2021101059	
+		
 		.data
 
 campo:		.space	576
+interface:	.space	576
+
 tamanho:	.word	0
 enderecoRA:	.word	0
 salva_S0:	.word	0
@@ -11,7 +15,7 @@ coluna:		.word	0
 
 
 msg:		.asciz  "  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Opção: "
-menu_jogar:	.asciz	"  Jogadas\n1- Abrir posição\n2-Adicionar/Retirar Bandeira\n3-   Sair\nSua opção:  "
+menu_jogar:	.asciz	"\nJogadas\nA- Abrir posição\nB -Adicionar/Retirar Bandeira\nC -   Sair\nSua opção:  "
 msg_abre_pos:	.asciz	"Para abrir uma posição digite a linha e a coluna respectivamente:\n"
 msg_linha:	.asciz	"Linha: \n"
 msg_coluna:	.asciz	"Coluna: \n"
@@ -33,10 +37,9 @@ main:
 	la	t1,tamanho
 	sw	a0,(t1)
 	
-	#Inicia Campo
+	#inicia campo
 	la	a0,campo
-	li	t1,0		#Inicia linha
-	li	t2,0		#Inicia coluna		
+	lw	a1,tamanho
 	jal	inicia_campo
 	
 	#mostrar campo
@@ -374,14 +377,14 @@ opcao_valida:
 	jr	s2
 
 abrir_posicao:
-	jal	s0,le_posicao
+	jal	s0,le_posicao_abre
 	j	escolhe_jogada
 	
 bandeiras:
-	jal	s0,le_posicao
+	jal	s0,le_posicao_bandeira
 	j	escolhe_jogada
 	
-le_posicao:
+le_posicao_abre:
 	la	a0,msg_abre_pos
 	li	a7,4
 	ecall
@@ -403,6 +406,27 @@ le_posicao:
 	
 	jr	s0
 	
+le_posicao_bandeira:
+	la	a0,msg_abre_pos
+	li	a7,4
+	ecall
+	la	a0,msg_linha
+	li	a7,4
+	ecall
+	li	a7,5
+	ecall
+	la	t1,linha
+	sw	a0,(t1)
+	
+	la	a0,msg_coluna
+	li	a7,4
+	ecall
+	li	a7,5
+	ecall
+	la	t1,coluna
+	sw	a0,(t1)
+	
+	jr	s0
 encerra_programa:
 	li	a7,10
 	ecall
