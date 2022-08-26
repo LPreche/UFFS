@@ -1,7 +1,7 @@
 		.data
 
-campo:		.space	576 #aloca espaço para 12x12 posições. Campo 
-interface:	.space	576 #aloca espaço para 12x12 posições. Campo interface do jogador
+campo:		.space	576 #aloca espaï¿½o para 12x12 posiï¿½ï¿½es. Campo 
+interface:	.space	576 #aloca espaï¿½o para 12x12 posiï¿½ï¿½es. Campo interface do jogador
 
 
 tamanho:	.word	0
@@ -37,16 +37,16 @@ main:
 	sw	a0,(t1)
 	
 	#Inicia Campo
-	la	a0,campo	#Passa endereço do campo em a0
+	la	a0,campo	#Passa endereï¿½o do campo em a0
 	li	t1,0		#Inicia linha
 	li	t2,0		#Inicia coluna		
 	jal	inicia_campo	
 	
 	#Inicia Campo inteface 
-	la	a0,interface	#Passa endereço do campo interface em a0
+	la	a0,interface	#Passa endereï¿½o do campo interface em a0
 	li	t1,0		#Inicia linha
 	li	t2,0		#Inicia coluna		
-	jal	inicia_campo
+	jal	inicia_interface
 	
 	#Chama Funcao Insere bomba
 	la	a0,campo
@@ -55,7 +55,7 @@ main:
 	##########################
 	
 	#mostrar campo interface
-	la	a1,campo	#passa endereï¿½o do campo em a1 pois a0 sera utilizado posteriormente como argumento da chamada de função.
+	la	a1,campo	#passa endereï¿½o do campo em a1 pois a0 sera utilizado posteriormente como argumento da chamada de funï¿½ï¿½o.
 	lw	a2,tamanho	#passa tamanho do campo em a2
 	li	t0,0		#inicia linha
 	li	t1,0		#inicia coluna
@@ -113,6 +113,19 @@ inicia_campo:
 	bne	t2,a1,inicia_campo
 	ret
 
+	
+inicia_interface: 
+	li	t6,1
+	sw	t6,(a0)
+	addi	a0,a0,4
+	addi	t1,t1,1	
+
+	bne	t1,a1,inicia_interface
+	li	t1,0
+	addi	t2,t2,1
+	bne	t2,a1,inicia_interface
+	ret
+	
 mostra_campo:
 	li	t3,9
 	mv	a0,t0
@@ -383,6 +396,7 @@ EH_POSITIVO:
 jogar:
 	mv	s0,a0
 	mv	s1,a1
+	
 escolhe_jogada:
 	la	a0,menu_jogar
 	li	a7,4
@@ -424,14 +438,21 @@ opcao_valida:
 	jr	s2
 
 abrir_posicao:
+	la	a0,msg_abre_pos
+	li	a7,4
+	ecall
+
 	jal	s0,le_posicao
 	lw	t0,linha
 	lw	t1,coluna
+	addi	t0,t0,-1
+	addi	t1,t1,-1
 	li	t2,4
 	mul	t0,t0,t2
-	li	t2,8
+	li	t2,32
 	mul	t1,t1,t2
-	mul	t0,t0,t1
+	add	t0,t0,t1
+	
 	la	t1,campo
 	la	t2,interface
 	add	t1,t1,t0
@@ -439,14 +460,7 @@ abrir_posicao:
 	
 	lw	t5,(t1)
 	sw	t5,(t2)
-	
-	la	a1,interface
-	lw	a2,tamanho
-	li	t0,0
-	li	t1,0
-	addi	t2,a2,1
-	jal	mostra_interface
-	
+
 	j	escolhe_jogada
 	
 bandeiras:
@@ -454,22 +468,24 @@ bandeiras:
 	j	escolhe_jogada
 	
 le_posicao:
-	la	a0,msg_abre_pos
-	li	a7,4
-	ecall
+
 	la	a0,msg_linha
 	li	a7,4
 	ecall
+	
 	li	a7,5
 	ecall
+	
 	la	t1,linha
 	sw	a0,(t1)
 	
 	la	a0,msg_coluna
 	li	a7,4
 	ecall
+	
 	li	a7,5
 	ecall
+	
 	la	t1,coluna
 	sw	a0,(t1)
 	
