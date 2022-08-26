@@ -1,7 +1,7 @@
 		.data
 
-campo:		.space	576 #aloca espa�o para 12x12 posi��es. Campo 
-interface:	.space	576 #aloca espa�o para 12x12 posi��es. Campo interface do jogador
+campo:		.space	576 #aloca espaco para 12x12 posicoes. Campo 
+interface:	.space	576 #aloca espaco para 12x12 posicoes. Campo interface do jogador
 
 
 tamanho:	.word	0
@@ -13,14 +13,14 @@ linha:		.word	0
 coluna:		.word	0
 
 
-msg:		.asciz  "\n  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Opção: "
-menu_jogar:	.asciz	" \nJogadas\n(A)- Abrir posição\n(B)-Adicionar/Retirar Bandeira\n(C)-   Sair\nSua opção:  "
+msg:		.asciz  "\n  Campo Minado\n1- Campo de 8x8\n2- Campo de 10x10\n3- Campo de 12x12\nSua Opcao: "
+menu_jogar:	.asciz	" \nJogadas\n(A)- Abrir posicao\n(B)-Adicionar/Retirar Bandeira\n(C)-   Sair\nSua opcao:  "
 msg_abre_pos:	.asciz	"\nPara abrir uma posição digite a linha e a coluna respectivamente:\n"
 msg_linha:	.asciz	"Linha: \n"
 msg_coluna:	.asciz	"Coluna: \n"
 espaco:		.asciz	" "
 quebra:		.asciz	"\n"
-op_invalida:	.asciz	"Opcão invalida, Digite Novamente:	"
+op_invalida:	.asciz	"Opcao invalida, Digite Novamente:	"
 traco:		.asciz	"-"
 op:		.asciz
 		
@@ -37,13 +37,13 @@ main:
 	sw	a0,(t1)
 	
 	#Inicia Campo
-	la	a0,campo	#Passa endere�o do campo em a0
+	la	a0,campo	#Passa endereco do campo em a0
 	li	t1,0		#Inicia linha
 	li	t2,0		#Inicia coluna		
 	jal	inicia_campo	
 	
-	#Inicia Campo inteface 
-	la	a0,interface	#Passa endere�o do campo interface em a0
+	#Inicia Campo inteface Somente teste
+	la	a0,interface	#Passa endereco do campo interface em a0
 	li	t1,0		#Inicia linha
 	li	t2,0		#Inicia coluna		
 	jal	inicia_interface
@@ -55,7 +55,7 @@ main:
 	##########################
 	
 	#mostrar campo interface
-	la	a1,campo	#passa endere�o do campo em a1 pois a0 sera utilizado posteriormente como argumento da chamada de fun��o.
+	la	a1,campo	#passa endereco do campo em a1 pois a0 sera utilizado posteriormente como argumento da chamada de fun��o.
 	lw	a2,tamanho	#passa tamanho do campo em a2
 	li	t0,0		#inicia linha
 	li	t1,0		#inicia coluna
@@ -63,11 +63,10 @@ main:
 	jal	mostra_campo
 
 	
-
-	li	t0,0
-	li	t1,0
 	##########################
 	#iniciando jogo
+	li	t0,0
+	li	t1,0
 	la	a0,campo
 	lw	a1,tamanho
 	jal	jogar
@@ -114,18 +113,17 @@ inicia_campo:
 	ret
 
 	
-inicia_interface: 
-	li	t6,1
+inicia_interface: #Somente para fins de teste
+	li	t6,11
 	sw	t6,(a0)
 	addi	a0,a0,4
 	addi	t1,t1,1	
-
 	bne	t1,a1,inicia_interface
 	li	t1,0
 	addi	t2,t2,1
 	bne	t2,a1,inicia_interface
 	ret
-	
+	######################################
 mostra_campo:
 	li	t3,9
 	mv	a0,t0
@@ -235,7 +233,11 @@ mostra_interface:
 	li	a7,4
 	ecall
 mostra_interface2:
+	li	t6,11
 	lw	a0,(a1)
+	
+	beq	a0,t6,mostra_traco
+	
 	li	a7,1
 	ecall
 	
@@ -285,6 +287,43 @@ zeraT0Interface2:
 	li	a7,4
 	ecall
 	j	mostra_interface2
+	
+mostra_traco:
+	la	a0,traco
+	li	a7,4
+	ecall
+	
+	la	a0,espaco
+	li	a7,4
+	ecall
+	addi	t1,t1,1
+	addi	a1,a1,4
+	bne	t1,a2,mostra_interface2
+	
+	li	t1,0
+	addi	t2,t2,1
+	
+	la	a0,quebra
+	li	a7,4
+	ecall
+	
+	beq	t2,a2,fim
+	beq	t0,t3,zeraT0Interface2
+	
+	addi	a0,t0,1
+	li	a7,1
+	ecall
+	la	a0,espaco
+	li	a7,4
+	ecall
+	
+	addi	t0,t0,1
+		
+	bne	t2,a2,mostra_interface2
+
+	j	fim
+	
+	
 fim:
 	ret
 	
@@ -394,13 +433,28 @@ EH_POSITIVO:
 	
 
 jogar:
-	mv	s0,a0
-	mv	s1,a1
+	la	a0,quebra
+	li	a7,4
+	ecall
+	la	a0,quebra
+	li	a7,4
+	ecall
+	#mostrar campo interface
+	la	a1,interface	#passa endereco do campo em a1 pois a0 sera utilizado posteriormente como argumento da chamada de fun��o.
+	lw	a2,tamanho	#passa tamanho do campo em a2
+	li	t0,0		#inicia linha
+	li	t1,0		#inicia coluna
+	addi	t2,a2,1		
+	jal	mostra_interface
 	
-escolhe_jogada:
+	mv	s0,a0
+	lw	t4,(a1)
 	la	a0,menu_jogar
 	li	a7,4
 	ecall
+	
+escolhe_jogada:
+
 	jal	s2,seleciona_opcao
 	
 	lbu	t0,(a0)
@@ -419,9 +473,12 @@ escolhe_jogada:
 	j	escolhe_jogada
 	
 seleciona_opcao:
+	la	a0,op
 	li	a7,8
 	ecall
+	
 	lbu	t0,(a0)
+	
 	li	t1,65
 	beq	t0,t1,opcao_valida
 	li	t0,66
@@ -447,11 +504,15 @@ abrir_posicao:
 	lw	t1,coluna
 	addi	t0,t0,-1
 	addi	t1,t1,-1
+
 	li	t2,4
+	mul	t2,t2,s1
 	mul	t0,t0,t2
-	li	t2,32
+	li	t2,4
+	
 	mul	t1,t1,t2
 	add	t0,t0,t1
+	
 	
 	la	t1,campo
 	la	t2,interface
@@ -461,11 +522,11 @@ abrir_posicao:
 	lw	t5,(t1)
 	sw	t5,(t2)
 
-	j	escolhe_jogada
+	j	jogar
 	
 bandeiras:
 	jal	s0,le_posicao
-	j	escolhe_jogada
+	j	jogar
 	
 le_posicao:
 
