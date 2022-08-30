@@ -1,4 +1,5 @@
-		.data
+#Aluno: Luiz Paulo Reche		Matricula: 2021101059
+				.data
 
 campo:		.space	576 #aloca espaco para 12x12 posicoes. Campo 
 interface:	.space	576 #aloca espaco para 12x12 posicoes. Campo interface do jogador
@@ -118,7 +119,8 @@ retorna_tamanho:
 	mv	a0,a1
 	ret 
 	
-inicia_campo: 
+inicia_campo: #inicia campo com atributos zerados
+
 	sw	zero,(a0)
 	addi	a0,a0,4
 	addi	t1,t1,1	
@@ -140,9 +142,9 @@ inicia_interface: #inicia o campo interface com a inteiro 11, onde representaria
 	addi	t2,t2,1
 	bne	t2,a1,inicia_interface
 	ret
-##########################################################
+
 	
-mostra_campo:
+mostra_campo:#funcao para mostrar campo de ocntrole
 	li	t3,9
 	mv	a0,t0
 	li	a7,1
@@ -170,7 +172,6 @@ mostra_campo:
 	la	a0,espaco
 	li	a7,4
 	ecall
-	
 mostra_campo2:
 	lw	a0,(a1)
 	li	a7,1
@@ -208,11 +209,11 @@ mostra_campo2:
 
 	ret
 	
-zera_t0:
+zera_t0:#funcao para zerar os indices quando valor ultrapassar 9
 	li	t0,0
 	j	mostra_campo
 	
-zera_t0_2:
+zera_t0_2:#funcao para zerar os indices quando valor ultrapassar 9
 	li	t0,0
 	mv	a0,t0
 	li	a7,1
@@ -223,7 +224,7 @@ zera_t0_2:
 	ecall
 	j	mostra_campo2
 	
-mostra_interface:
+mostra_interface:#funcao para mostrar o campo do usuario
 	li	t3,9
 	mv	a0,t0
 	li	a7,1
@@ -251,7 +252,6 @@ mostra_interface:
 	la	a0,espaco
 	li	a7,4
 	ecall
-	
 mostra_interface2:
 	li	t6,11
 	lw	a0,(a1)
@@ -293,12 +293,11 @@ mostra_interface2:
 	bne	t2,a2,mostra_interface2
 
 	ret
-	
-zeraT0Interface:
+zeraT0Interface:#funcao para zerar os indices quando valor ultrapassar 9
 	li	t0,0
 	j	mostra_interface
 	
-zeraT0Interface2:
+zeraT0Interface2:#funcao para zerar os indices quando valor ultrapassar 9
 	li	t0,0
 	mv	a0,t0
 	li	a7,1
@@ -307,21 +306,21 @@ zeraT0Interface2:
 	la	a0,espaco
 	li	a7,4
 	ecall
-	j	mostra_interface2
+	j	mostra_interface2	
 	
-mostra_traco:
+mostra_traco:#se na posicao houver o valor 11, vai mostrar -
 	la	a0,traco
 	li	a7,4
 	ecall
 
 	j mostra_caracter
 
-mostra_bandeira:
+mostra_bandeira:#se na posicao houver o valor 10, vai mostrar F
 	la	a0,Bandeira
 	li	a7,4
 	ecall
 		
-mostra_caracter:
+mostra_caracter:#chama restante da funcao
 	la	a0,espaco
 	li	a7,4
 	ecall
