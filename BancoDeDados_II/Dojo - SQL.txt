@@ -1,0 +1,13 @@
+select a.nome as empregado, b.nome as chefe, a.salario as emp_sal, b.salario as chef_sal from empregados a join empregados b on a.supervisor_id = b.emp_id where a.salario > b.salario;
+
+
+select dep_id,max(salario) from empregados group by dep_id order by dep_id;
+
+
+select a.dep_id,a.nome, a.salario from empregados a join
+(select dep_id,max(salario) as salario from empregados group by dep_id) b on a.dep_id = b.dep_id
+where a.salario=b.salario;
+
+
+
+
