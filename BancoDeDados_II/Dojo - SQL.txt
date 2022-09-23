@@ -1,13 +1,41 @@
-select a.nome as empregado, b.nome as chefe, a.salario as emp_sal, b.salario as chef_sal from empregados a join empregados b on a.supervisor_id = b.emp_id where a.salario > b.salario;
+1)select a.nome as empregado, b.nome as chefe, a.salario as emp_sal, b.salario as chef_sal from empregados a join empregados b on a.supervisor_id = b.emp_id where a.salario > b.salario;
 
 
-select dep_id,max(salario) from empregados group by dep_id order by dep_id;
+2)select dep_id,max(salario) from empregados group by dep_id order by dep_id;
 
 
-select a.dep_id,a.nome, a.salario from empregados a join
+3)select a.dep_id,a.nome, a.salario from empregados a join
 (select dep_id,max(salario) as salario from empregados group by dep_id) b on a.dep_id = b.dep_id
 where a.salario=b.salario;
 
+
+4)select c.nome from departamentos c join (select a.dep_id,count(b.dep_id) as contagem from departamentos a join empregados b on a.dep_id = b.dep_id group by a.dep_id) d on c.dep_id = d.dep_id where d.contagem < 3;
+
+
+5)select c.nome,d.contagem from departamentos c join (select a.dep_id,count(b.dep_id) as contagem from departamentos a join empregados b on a.dep_id = b.dep_id group by a.dep_id) d on c.dep_id = d.dep_id;
+
+
+6)select  emp.nome ,emp.dep_id from empregados emp left join empregados chef on emp.supervisor_id = chef.emp_id where chef.dep_id != emp.dep_id;
+
+
+7)select  emp.nome ,emp.dep_id from empregados emp left join empregados chef on emp.supervisor_id = chef.emp_id where chef.dep_id != emp.dep_id;
+
+
+8)select departamentos.nome, sum(empregados.salario) from empregados left join departamentos on empregados.dep_id = departamentos.dep_id group by departamentos.nome;
+
+
+9)select emp.nome, emp.salario from empregados emp join (select departamentos.dep_id, avg(empregados.salario) as media_sal from empregados left join departamentos on empregados.dep_id = departamentos.dep_id group by departamentos.dep_id) medias on emp.dep_id = medias.dep_id where emp.salario > medias.media_sal;
+
+
+10)select emp.emp_id,emp.nome, emp.dep_id,emp.salario, medias.media_sal from empregados emp left join (select departamentos.dep_id, avg(empregados.salario) as media_sal from empregados left join departamentos on empregados.dep_id = departamentos.dep_id group by departamentos.dep_id) medias on emp.dep_id = medias.dep_id order by emp.dep_id;
+
+
+
+11)select emp.emp_id,emp.nome, emp.dep_id,emp.salario, medias.media_sal from empregados emp join (select departamentos.dep_id, avg(empregados.salario) as media_sal from empregados left join departamentos on empregados.dep_id = departamentos.dep_id group by departamentos.dep_id) medias on emp.dep_id = medias.dep_id  where emp.salario >= medias.media_sal order by emp.dep_id;
+
+
+N)Listar o departamento com a maior média de salarios
+ 
 
 
 
