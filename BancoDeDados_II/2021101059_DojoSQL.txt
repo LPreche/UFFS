@@ -34,7 +34,9 @@ where a.salario=b.salario;
 11)select emp.emp_id,emp.nome, emp.dep_id,emp.salario, medias.media_sal from empregados emp join (select departamentos.dep_id, avg(empregados.salario) as media_sal from empregados left join departamentos on empregados.dep_id = departamentos.dep_id group by departamentos.dep_id) medias on emp.dep_id = medias.dep_id  where emp.salario >= medias.media_sal order by emp.dep_id;
 
 
-N)Listar o departamento com a maior média de salarios
+N)Mostrar a maior media dos departamentos
+
+select max(dep_med.medias) as maior_media from (select departamentos.nome, avg(empregados.salario) as medias from departamentos join empregados on departamentos.dep_id = empregados.dep_id group by departamentos.nome)dep_med ;
  
 
 
