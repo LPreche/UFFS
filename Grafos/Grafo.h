@@ -15,6 +15,8 @@
 #include<list>
 #include "Aresta.h"
 
+using namespace std;
+
 class Grafo {
 public:
     Grafo(int num_vertices);
@@ -28,7 +30,7 @@ public:
 private:
     int num_vertices_;
     int num_arestas_;
-    std::vector<std::list<int>> lista_adj_;
+    vector<list<int>> lista_adj_;
 };
 
 #endif /* GRAFO_H */
