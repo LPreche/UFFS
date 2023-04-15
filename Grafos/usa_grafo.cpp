@@ -65,12 +65,16 @@ int main() {
             break;
 
             case 'P':
+                system("clear");
                 cout << "Imprimir Grafo" << endl;
+                g.imprime();
             break;
             
             default:
                 cout << "opcao invalida" << endl;
         }
+        
     }
+    
     return 0;
 }
