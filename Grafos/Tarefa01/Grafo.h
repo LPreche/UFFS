@@ -3,8 +3,8 @@
  *
  * GEN254 - Grafos - 2023/1
  *
- * Nome:      XXXX
- * Matricula: XXXX
+ * Nome:      Luiz Paulo Reche
+ * Matricula: 2021101059
  */
 
 #ifndef GRAFO_H

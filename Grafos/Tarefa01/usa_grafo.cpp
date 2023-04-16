@@ -15,63 +15,57 @@ int main() {
 
     int V,O,X=0,Y=0;
     char op;
+
     do{
-        cout<<"Digite o numero de vertices: ";
         cin>>V;
-        cout << endl;
     }while(V<=0);
 
     do{
-        cout<<"Digite o numero de Operacoes: ";
         cin>>O;
-        cout << endl;
     }while(O<=0);
 
     Grafo g(V);
     for(auto i=0;i<O;i++){
-       
-        cout<<"Informe a operacao: ";
         cin>>op;
-        cout<< endl;
         switch(op){
             case 'I':{ 
-                
-                cout << "Inserir Aresta" << endl;
-                cout << "Digite as cordenadas para inserir uma aresta X e Y: ";
-                cin >> X >> Y;
-                cout << endl;
+                do{    
+                    cin >> X >> Y;
+                }while((X<0 || Y<0) || (X>V || Y>V));
+
                 Aresta e(X,Y);
                 g.insere_aresta(e);
             }
             break;
 
-            case 'R':
-                cout << "Remover Aresta" << endl;
-                cout << "Digite as cordenadas para remover uma aresta X e Y: ";
-                cin >> X >> Y;
-                cout << endl;
+            case 'R':{
+                do{
+                    cin >> X >> Y;
+                }while((X<0 || Y<0) || (X>V || Y>V));
+                
+                Aresta e(X,Y);
+                g.remove_aresta(e);
+            }
             break;
 
             case 'E':
-                cout << "Obter numero de arestas" << endl;
+                cout << g.num_arestas() << endl;
             break;
 
             case 'X':
-                cout << "Calcular Grau maximo" << endl;
+                cout << g.grau_maximo() << endl;
             break;
 
             case 'N':
-                cout << "Calcular Grau Minimo "<< endl;
+                cout << g.grau_minimo() << endl;
             break;
 
             case 'P':
-                system("clear");
-                cout << "Imprimir Grafo" << endl;
                 g.imprime();
             break;
             
             default:
-                cout << "opcao invalida" << endl;
+                cout << "" << endl;
         }
         
     }

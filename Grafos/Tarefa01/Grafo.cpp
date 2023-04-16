@@ -26,37 +26,53 @@ int Grafo::num_arestas(){
 }
 
 
+int Grafo::grau_minimo(){
+    int min = num_arestas_;
+    for(auto i = 0;i < num_vertices_;i++){
+        if(lista_adj_[i].size() < min){
+            min = lista_adj_[i].size();
+        }
+    }   
+    return min;
+}
+
 int Grafo::grau_maximo(){
-    return (num_vertices_*(num_vertices_-1))/2;
+    int max = 0;
+    for(auto i=0;i<num_vertices_;i++){
+        if(lista_adj_[i].size() > max){
+            max = lista_adj_[i].size();
+        }
+    }
+    return max;
 }
 
 
 void Grafo::insere_aresta(Aresta e){
-    if(e.v1 >= 0 && e.v2 >= 0){
-        if(e.v1 < num_vertices_ && e.v2 < num_vertices_){
-            if(!verificaAresta(e)){
-                lista_adj_[e.v1].push_front(e.v2);
-                lista_adj_[e.v2].push_front(e.v1);
-            }else{
-                cout << "Aresta já existe!" << "\n" << endl;
-            }
-        }else{
-            cout << "Aresta com Valor Superior ao numero de vertices!" << "\n" << endl;
-        }
-    }else{
-        cout << "Aresta com posição negativa!" << "\n" << endl;
+    
+    if(!verificaAresta(e) && (e.v1 != e.v2)){
+        lista_adj_[e.v1].push_front(e.v2);
+        lista_adj_[e.v2].push_front(e.v1);
+        num_arestas_++;
     }
+}
+
+
+void Grafo::remove_aresta(Aresta e){
+    if(verificaAresta(e)){
+        lista_adj_[e.v1].remove(e.v2);
+        lista_adj_[e.v2].remove(e.v1);
+        num_arestas_--;
+    }             
 }
 
 
 bool Grafo::verificaAresta(Aresta e){
     for(auto L : lista_adj_[e.v1]){
-        if(e.v2 == L){
+        if(L == e.v2){
             return true;
-        }else{
-            return false;
         }
     }
+    return false;
 }
 
 
