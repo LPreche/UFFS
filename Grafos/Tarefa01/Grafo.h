@@ -3,8 +3,8 @@
  *
  * GEN254 - Grafos - 2023/1
  *
- * Nome:      XXXX
- * Matricula: XXXX
+ * Nome:      Luiz Paulo Reche
+ * Matricula: 2021101059
  */
 
 #ifndef GRAFO_H
@@ -27,6 +27,7 @@ public:
     int grau_maximo();
     int grau_minimo();
     void imprime();
+    bool verificaAresta(Aresta e);
 private:
     int num_vertices_;
     int num_arestas_;
