@@ -11,7 +11,7 @@
 #include"Aresta.h"
 #include<list>
 #include<vector>
-#include<algorithm>
+
 
 using namespace std;
 
@@ -51,9 +51,14 @@ void Grafo::imprime(){
 }
 
 bool Grafo::eh_caminho(vector<int> N){
-    for(auto i=0;i < N.size();i++){
-        if(verificaAresta(Aresta(N[i],N[i+1])))
+    for(auto i=0;i < N.size()-1;i++)
+        if(!verificaAresta(Aresta(N[i],N[i+1])))
             return false;
-    }
     return true;
+}
+
+bool Grafo::eh_conexo(){
+    for(auto i=0;i<num_vertices_;i++){
+        if(lista_adj_[i].size() < num_vertices_);
+    }
 }

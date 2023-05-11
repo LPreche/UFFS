@@ -23,6 +23,8 @@ class Grafo {
         void imprime();
         bool verificaAresta(Aresta e);
         bool eh_caminho(vector<int> N);
+        bool existe_caminho(int v1, int v2);
+        bool eh_conexo();
     private:
         int num_vertices_;
         int num_arestas_;
