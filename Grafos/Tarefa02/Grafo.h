@@ -11,6 +11,7 @@
 
 #define GRAFO_H
 #include<iostream>
+#include<list>
 #include<vector>
 #include "Aresta.h"
 
@@ -20,11 +21,11 @@ class Grafo {
     public:
         Grafo(int num_vertices);
         void insere_aresta(Aresta e);
-        void imprime();
         bool verificaAresta(Aresta e);
         bool eh_caminho(vector<int> N);
-        bool existe_caminho(int v1, int v2);
+        bool existe_caminho(int v1, int v2,vector<bool>& visitado);
         bool eh_conexo();
+        bool eh_aciclico();
     private:
         int num_vertices_;
         int num_arestas_;

@@ -6,11 +6,11 @@
  * Nome:      Luiz Paulo Reche
  * Matricula: 2021101059
  */
-
-#include"Grafo.h"
-#include"Aresta.h"
 #include<list>
 #include<vector>
+#include"Grafo.h"
+
+
 
 
 using namespace std;
@@ -40,25 +40,77 @@ bool Grafo::verificaAresta(Aresta e){
     return false;
 }
 
-void Grafo::imprime(){
-    for(auto i=0;i<num_vertices_;i++){
-        cout<<i<<": ";
-        for(auto L: lista_adj_[i]){
-            cout<< L << " ";
-        }
-        cout <<"\n";
-    }
-}
-
 bool Grafo::eh_caminho(vector<int> N){
-    for(auto i=0;i < N.size()-1;i++)
-        if(!verificaAresta(Aresta(N[i],N[i+1])))
+    for (auto i = 1; i < N.size(); i++) {
+        for (auto j = 0; j < i; j++) {
+            if (N[i] == N[j]) {
+                return false;
+            }
+        }
+        
+        if (!verificaAresta(Aresta(N[i-1], N[i]))) 
             return false;
+        
+    }
+    
     return true;
 }
 
-bool Grafo::eh_conexo(){
-    for(auto i=0;i<num_vertices_;i++){
-        if(lista_adj_[i].size() < num_vertices_);
+bool Grafo::existe_caminho(int V1, int V2,vector<bool>& visitado) {
+    
+    if (V1 == V2) {
+        return true;
     }
+
+    visitado[V1] = true;
+    
+    for(auto  L : lista_adj_[V1]) {
+        int vizinho = L;
+
+        if (!visitado[vizinho])
+            if (existe_caminho(vizinho, V2, visitado))
+                return true;
+    }
+
+    return false;
+}
+
+bool Grafo::eh_conexo(){
+    for(auto i=1;i < num_vertices_; i++){
+        vector<bool> visitado;
+        visitado.resize(num_vertices_,false);
+        if(!existe_caminho(0,i,visitado))
+            return false;
+    }      
+    return true;
+}
+
+
+bool Grafo::eh_aciclico() {
+    
+    vector<int> lista_adj_Aux_(num_vertices_, 0);
+
+    for (int i = 0; i < num_vertices_; i++) {
+        for (int L : lista_adj_[i]) {
+            lista_adj_Aux_[L]++;
+        }
+    }
+
+    for (int i = 0; i < num_vertices_; i++) {
+        int j;
+        for (j = 0; j < num_vertices_; j++) 
+            if (lista_adj_Aux_[j] == 0) 
+                break;
+            
+        if(j == num_vertices_)  
+            return false;
+        
+        lista_adj_Aux_[j] = -1; 
+
+        for (int vizinho : lista_adj_[j]) 
+            lista_adj_Aux_[vizinho]--;
+        
+    }
+
+    return true;
 }

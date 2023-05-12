@@ -7,42 +7,30 @@
  * Matricula: 2021101059
  */
 
-#include"Grafo.cpp"
-#include"Aresta.cpp"
 #include<iostream>
 #include<locale>
+#include"Grafo.h"
+#include"Aresta.h"
 
 using namespace std;
 
 int main() {
-    setlocale(LC_ALL, "pt_BR.UTF-8");
-
     int O,V,E,e1,e2;
     char c;
-        cout << "Digite o numero de vertices: ";
+        
         do{
-            cin >> V;
-        }while(V<1);
+            cin >> V >> E;
+        }while(V<1 && E<0);
         Grafo g(V);
-        cout << endl;
-        cout << "Digite o numero de Arestas: ";
-        do{
-            cin >> E;
-        }while(E<0);
-        cout << endl;
+        
         for(auto i=0;i<E;i++){
-            cout << "Digite dois vertices para inserir uma aresta: ";
             cin >> e1 >> e2; 
             g.insere_aresta(Aresta(e1,e2));
         }
-        cout << "Digite o numero de operacoes: ";
         cin >> O;
-        cout << endl;
 
         for(auto i=0;i<O;i++){
-            cout << "Digite sua opcao: ";
             cin >> c;
-            cout << endl;
 
             switch(c){
                 case 'S':{
@@ -62,23 +50,45 @@ int main() {
                 }
                 break;
 
-                case 'C':
-                
+                case 'C':{
+                    int v1,v2;
+                    vector<bool> visitado;
+                    visitado.resize(V,false);
+
+                    do{
+                        cin >> v1 >> v2;
+                    }while(v1 < 0 || v2 < 0);
+                    
+                    if(g.existe_caminho(v1,v2,visitado))
+                        cout << "SIM" << endl;
+                    else
+                        cout << "NAO" << endl;
+                }
                 break;
                 
-                case 'X':
-                
+                case 'X':{
+                    
+                    if(g.eh_conexo())
+                        cout << "SIM" << endl;
+                    else
+                        cout << "NAO" << endl;
+                        
+                }
                 break;
                 
-                case 'A':
-                
+                case 'A':{
+                    if(g.eh_aciclico())
+                        cout << "SIM" << endl;
+                    else
+                        cout << "NAO" << endl;
+                }
                 break;
                 
                 default:
                     cout << endl;
             }
         }
-        g.imprime();
+        
 
 
     return 0;
