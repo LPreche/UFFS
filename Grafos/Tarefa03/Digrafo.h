@@ -19,12 +19,11 @@ using namespace std;
 
 class Digrafo {
     public:
+        bool verificaAresta(Aresta e);
         Digrafo(int num_vertices);
         void insere_aresta(Aresta e);
-        bool verificaAresta(Aresta e);
         void imprimeDigrafo();
-        
-
+        void dijkstra(int cidade_origem,int cidade_destino,int extensao_min);
     private:
         int num_vertices_;
         int num_arestas_;

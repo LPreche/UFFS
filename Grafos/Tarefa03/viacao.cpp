@@ -28,11 +28,12 @@ int main() {
             cin >> X >> Y >> Z; 
             g.insere_aresta(Aresta(X,Y,Z));
         }
+        
         cin >> R;
         for(auto i=0;i<R;i++){
             cin >> x >> M; 
-            
         }
+
         //g.imprimeDigrafo();
 
   
