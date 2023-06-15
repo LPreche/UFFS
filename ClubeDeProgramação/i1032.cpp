@@ -2,7 +2,7 @@
 #include<vector>
 
 using namespace std;
-
+/* PROBLEMA RESOLVIDO POREM RETORNA TIME LIMIT EXCEED NO BEECROWD*/
 int main(){
 
     int n,j,cp;
