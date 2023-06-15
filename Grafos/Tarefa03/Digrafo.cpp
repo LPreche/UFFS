@@ -7,7 +7,7 @@
  * Matricula: 2021101059
  */
 #include<list>
-#include<vector>
+#include<utility>
 #include"Digrafo.h"
 
 
@@ -24,7 +24,10 @@ Digrafo::Digrafo(int n_vertices){
 void Digrafo::insere_aresta(Aresta e){
     
     if(!verificaAresta(e) && (e.v1 != e.v2)){
-        lista_adj_[e.v1].push_back(e.v2);
+        pair<int,int> par;
+        par.first = e.v2;
+        par.second = e.peso;
+        lista_adj_[e.v1].push_back(par);
         num_arestas_++;
     }
 
@@ -32,26 +35,20 @@ void Digrafo::insere_aresta(Aresta e){
 
 bool Digrafo::verificaAresta(Aresta e){
     for(auto L : lista_adj_[e.v1]){
-        if(L == e.v2){
+        if(L.first == e.v2){
             return true;
         }
     }
     return false;
 }
 
-bool Digrafo::eh_caminho(vector<int> N){
-    for (auto i = 1; i < N.size(); i++) {
-        for (auto j = 0; j < i; j++) {
-            if (N[i] == N[j]) {
-                return false;
-            }
+void Digrafo::imprimeDigrafo(){
+    for(auto i=0;i<num_vertices_;i++){
+        cout<<i<<": ";
+        for(auto L: lista_adj_[i]){
+            cout<< L.first << " ";
         }
-        
-        if (!verificaAresta(Aresta(N[i-1], N[i]))) 
-            return false;
-        
+        cout <<"\n";
     }
-    
-    return true;
 }
 

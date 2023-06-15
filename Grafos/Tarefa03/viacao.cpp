@@ -1,5 +1,5 @@
 /*
- * Tarefa 03 - Viacao Grafeira
+ * Tarefa 03 - Ciacao Grafeira
  *
  * GEN254 - Grafos - 2023/1
  *
@@ -15,63 +15,27 @@
 using namespace std;
 
 int main() {
-    int O,V,E,e1,e2,p;
+    int M,R,C,T,X,Y,Z,x;
     char c;
         
         do{
-            cin >> V >> E;
-        }while(V<1 && E<0);
-        Digrafo g(V);
+            cin >> C >> T; 
+        }while(C<1 && T<0);
+
+        Digrafo g(C);
         
-        for(auto i=0;i<E;i++){
-            cin >> e1 >> e2 >> p; 
-            g.insere_aresta(Aresta(e1,e2,p));
+        for(auto i=0;i<T;i++){
+            cin >> X >> Y >> Z; 
+            g.insere_aresta(Aresta(X,Y,Z));
         }
-        cin >> O;
-
-        for(auto i=0;i<O;i++){
-            cin >> c;
-
-            switch(c){
-                case 'S':{
-                    int n;
-                    cin >> n;
-                    vector<int> N;
-                    N.resize(n);
-
-                    for(auto i=0;i<N.size();i++)
-                        cin >> N[i];
-
-                    if(g.eh_caminho(N))
-                        cout << "SIM" << endl;
-                    else
-                        cout << "NAO" << endl;
-                    
-                }
-                break;
-
-                case 'C':{
-                    int v1,v2;
-                    vector<bool> visitado;
-                    visitado.resize(V,false);
-
-                    do{
-                        cin >> v1 >> v2;
-                    }while(v1 < 0 || v2 < 0);
-                    
-                    if(g.existe_caminho(v1,v2,visitado))
-                        cout << "SIM" << endl;
-                    else
-                        cout << "NAO" << endl;
-                }
-                break;
-
-                default:
-                    cout << endl;
-            }
+        cin >> R;
+        for(auto i=0;i<R;i++){
+            cin >> x >> M; 
+            
         }
-        
+        //g.imprimeDigrafo();
 
+  
 
     return 0;
 }

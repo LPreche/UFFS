@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/paulo/Documents/GitHub/UFFS/Grafos",
-      "program": "c:/Users/paulo/Documents/GitHub/UFFS/Grafos/build/Debug/outDebug",
+      "cwd": "c:/Users/paulo/Documents/GitHub/UFFS/Grafos/Tarefa03",
+      "program": "c:/Users/paulo/Documents/GitHub/UFFS/Grafos/Tarefa03/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

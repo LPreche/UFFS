@@ -22,12 +22,13 @@ class Digrafo {
         Digrafo(int num_vertices);
         void insere_aresta(Aresta e);
         bool verificaAresta(Aresta e);
-        bool eh_caminho(vector<int> N);
-        bool existe_caminho(int v1, int v2,vector<bool>& visitado);
+        void imprimeDigrafo();
+        
+
     private:
         int num_vertices_;
         int num_arestas_;
-        vector<vector<int>> lista_adj_;
+        vector<list<pair<int,int>>> lista_adj_;
 };
 
 #endif /* DIGRAFO_H */
