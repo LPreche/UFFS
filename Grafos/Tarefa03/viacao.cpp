@@ -31,7 +31,8 @@ int main() {
         
         cin >> R;
         for(auto i=0;i<R;i++){
-            cin >> x >> M; 
+            cin >> x >> M;
+            g.dijkstra(x,M);
         }
 
         //g.imprimeDigrafo();
