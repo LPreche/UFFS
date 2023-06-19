@@ -28,14 +28,15 @@ int main() {
             cin >> X >> Y >> Z; 
             g.insere_aresta(Aresta(X,Y,Z));
         }
-        
+        g.imprimeDigrafo();
         cin >> R;
         for(auto i=0;i<R;i++){
             cin >> x >> M;
             g.dijkstra(x,M);
-        }
+            cout<<endl;
+        } 
 
-        //g.imprimeDigrafo();
+        
 
   
 
